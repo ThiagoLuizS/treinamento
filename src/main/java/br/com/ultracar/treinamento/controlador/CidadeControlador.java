@@ -20,7 +20,7 @@ import br.com.ultracar.treinamento.evento.RecursoCriadoEvent;
 import br.com.ultracar.treinamento.servicos.CidadeService;
 
 @RestController
-@RequestMapping("/cidades")
+@RequestMapping("/api/cidades")
 public class CidadeControlador {
 	
 	@Autowired

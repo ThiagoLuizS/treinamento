@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,18 +13,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @SuppressWarnings("serial")
 @Table(name = "tb_bairro")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Bairro implements Serializable{
 
 	@Id
@@ -39,12 +41,13 @@ public class Bairro implements Serializable{
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_cidade", foreignKey = @ForeignKey(name = "fk_bairro_cidade"), nullable = false)
-	@JsonBackReference
 	private Cidade cidade;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "bairro")
-	private Set<Endereco> enderecos = new HashSet<>();
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "bairro", cascade = CascadeType.ALL)
+	private Set<Endereco> endereco = new HashSet<>();
 
+	public Bairro() {}
+	
 	public Long getId() {
 		return id;
 	}
@@ -69,13 +72,12 @@ public class Bairro implements Serializable{
 		this.cidade = cidade;
 	}
 
-	public Set<Endereco> getEnderecos() {
-		return enderecos;
+	public Set<Endereco> getEndereco() {
+		return endereco;
 	}
 
-	public void setEnderecos(Set<Endereco> enderecos) {
-		this.enderecos = enderecos;
+	public void setEndereco(Set<Endereco> endereco) {
+		this.endereco = endereco;
 	}
 
-	
 }

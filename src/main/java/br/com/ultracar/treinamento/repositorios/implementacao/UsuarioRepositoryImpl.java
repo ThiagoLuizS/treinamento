@@ -1,4 +1,4 @@
-package br.com.ultracar.treinamento.repositorios.help.usuario;
+package br.com.ultracar.treinamento.repositorios.implementacao;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +16,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import br.com.ultracar.treinamento.entidades.Usuario;
+import br.com.ultracar.treinamento.repositorios.customizacao.UsuarioRepositoryCustom;
 
 
-public class CustomizedUsuarioRepositoryImpl implements CustomizedUsuarioRepository{
+public class UsuarioRepositoryImpl implements UsuarioRepositoryCustom{
 
 	@PersistenceContext
 	private EntityManager em;

@@ -30,6 +30,8 @@ public class Ponto implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_endereco", foreignKey = @ForeignKey(name = "fk_ponto_endereco"), nullable = false)
 	private Endereco endereco;
+	
+	public Ponto() {}
 
 	public Long getId() {
 		return id;

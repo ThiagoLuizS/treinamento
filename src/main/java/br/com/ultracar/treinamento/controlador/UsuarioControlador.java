@@ -1,7 +1,6 @@
 package br.com.ultracar.treinamento.controlador;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import br.com.ultracar.treinamento.entidades.Usuario;
 import br.com.ultracar.treinamento.entidades.enumeradores.Crud;
 import br.com.ultracar.treinamento.evento.RecursoCriadoEvent;

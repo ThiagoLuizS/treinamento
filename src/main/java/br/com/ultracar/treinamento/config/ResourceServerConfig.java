@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +21,6 @@ import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecur
 @Configuration
 @EnableWebSecurity
 @EnableResourceServer
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	
 	@Autowired
@@ -42,9 +40,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 				.antMatchers("/permissao-acesso/**").permitAll()
 				.antMatchers("/operacoes/**").permitAll()
 				.antMatchers("/menus/**").permitAll()
-				.antMatchers("/cidades/**").permitAll()
-				.antMatchers("/estados/**").permitAll()
-				.antMatchers("/bairros/**").permitAll()
+				.antMatchers("/api/cidades/**").permitAll()
+				.antMatchers("/api/estados/**").permitAll()
+				.antMatchers("/api/bairros/**").permitAll()
+				.antMatchers("/api/enderecos/**").permitAll()
 				.anyRequest().authenticated()
 			.and()
 				.csrf().disable();

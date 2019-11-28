@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,7 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -22,11 +24,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import br.com.ultracar.treinamento.entidades.enumeradores.TipoLocal;
 
 @Entity
 @SuppressWarnings("serial")
 @Table(name = "tb_endereco")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Endereco  implements Serializable{
 	
 	@Id
@@ -40,30 +45,29 @@ public class Endereco  implements Serializable{
 	@Column(name = "ds_logradouro", length = 128, nullable = false)
 	private String logradouro;
 	
-	@Column(name = "nm_numero")
-	private Integer numero;
-	
-	@Column(name = "ds_complemento", length = 255)
-	private String complemento;
-	
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "en_tipo_local", length = 10, nullable = false)
 	private TipoLocal tipoLocal;
 	
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_bairro", foreignKey = @ForeignKey(name = "fk_endereco_bairro"), nullable = false)
-	private Bairro bairro;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "tb_endereco_bairro", joinColumns = {
+			@JoinColumn(name = "id_endereco", foreignKey = @ForeignKey(name="fk_endereco_bairro"))
+	},inverseJoinColumns = {
+			@JoinColumn(name = "id_bairro", foreignKey = @ForeignKey(name="fk_bairro_endereco"))
+	})
+	private Set<Bairro> bairro = new HashSet<>();
+	
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "endereco")
-	private Set<Ponto> pontos = new HashSet<>();
+	private Set<Complemento> complemento = new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "endereco")
-	private Set<Servico> servicos = new HashSet<>();
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "endereco")
-	private Set<Solicitante> solicitantes = new HashSet<>();
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "endereco")
+	private Set<Cep> cep = new HashSet<>();
+	
+	public Endereco() {}
 
 	public Long getId() {
 		return id;
@@ -81,22 +85,6 @@ public class Endereco  implements Serializable{
 		this.logradouro = logradouro;
 	}
 
-	public Integer getNumero() {
-		return numero;
-	}
-
-	public void setNumero(Integer numero) {
-		this.numero = numero;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-
 	public TipoLocal getTipoLocal() {
 		return tipoLocal;
 	}
@@ -105,38 +93,27 @@ public class Endereco  implements Serializable{
 		this.tipoLocal = tipoLocal;
 	}
 
-	public Bairro getBairro() {
+	public Set<Bairro> getBairro() {
 		return bairro;
 	}
 
-	public void setBairro(Bairro bairro) {
+	public void setBairro(Set<Bairro> bairro) {
 		this.bairro = bairro;
 	}
 
-	public Set<Ponto> getPontos() {
-		return pontos;
+	public Set<Complemento> getComplemento() {
+		return complemento;
 	}
 
-	public void setPontos(Set<Ponto> pontos) {
-		this.pontos = pontos;
+	public void setComplemento(Set<Complemento> complemento) {
+		this.complemento = complemento;
 	}
 
-	public Set<Servico> getServicos() {
-		return servicos;
+	public Set<Cep> getCep() {
+		return cep;
 	}
 
-	public void setServicos(Set<Servico> servicos) {
-		this.servicos = servicos;
+	public void setCep(Set<Cep> cep) {
+		this.cep = cep;
 	}
-
-	public Set<Solicitante> getSolicitantes() {
-		return solicitantes;
-	}
-
-	public void setSolicitantes(Set<Solicitante> solicitantes) {
-		this.solicitantes = solicitantes;
-	}
-
-	
-	
 }

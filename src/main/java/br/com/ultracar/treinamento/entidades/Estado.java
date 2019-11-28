@@ -1,24 +1,23 @@
 package br.com.ultracar.treinamento.entidades;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @SuppressWarnings("serial")
 @Table(name = "tb_estado")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Estado implements Serializable{
 
 	@Id
@@ -32,8 +31,7 @@ public class Estado implements Serializable{
 	@Column(name = "ds_sigla", length = 2, nullable = false)
 	private String sigla;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "estado")
-	private Set<Cidade> cidades = new HashSet<>();
+	public Estado() {}
 
 	public Long getId() {
 		return id;
@@ -50,13 +48,4 @@ public class Estado implements Serializable{
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
-
-	public Set<Cidade> getCidades() {
-		return cidades;
-	}
-
-	public void setCidades(Set<Cidade> cidades) {
-		this.cidades = cidades;
-	}
-	
 }
