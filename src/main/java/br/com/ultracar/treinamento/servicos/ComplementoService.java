@@ -7,21 +7,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.ultracar.treinamento.entidades.Endereco;
-import br.com.ultracar.treinamento.repositorios.EnderecoRepository;
+import br.com.ultracar.treinamento.entidades.Complemento;
+import br.com.ultracar.treinamento.repositorios.ComplementoRepository;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
-public class EnderecoService {
+public class ComplementoService {
 	
 	@Autowired
-	private EnderecoRepository repository;
-
-	public Page<Endereco> findByEndereco(Endereco endereco, Pageable pageable){
-		return repository.findByEndereco(endereco, pageable);
+	private ComplementoRepository repository;
+	
+	public Page<Complemento> findByComplemento(Complemento complemento, Pageable pageable){
+		return repository.findByComplemento(complemento, pageable); 
 	}
 	
-	public Endereco saveByEndereco(Endereco endereco) {
-		return repository.save(endereco);
+	public Complemento saveByComplemento(Complemento complemento) {
+		return repository.save(complemento);
 	}
 }

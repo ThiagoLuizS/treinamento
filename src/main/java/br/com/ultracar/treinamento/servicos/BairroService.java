@@ -3,6 +3,8 @@ package br.com.ultracar.treinamento.servicos;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,5 +30,9 @@ public class BairroService {
 	
 	public List<Bairro> findByCidade(Cidade cidade){
 		return bairroRepository.findByCidade(cidade);
+	}
+	
+	public Page<Bairro> findByBairro(Bairro bairro, Pageable pageable){
+		return bairroRepository.findByBairro(bairro, pageable);
 	}
 }

@@ -12,29 +12,31 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import br.com.ultracar.treinamento.entidades.Cep;
-import br.com.ultracar.treinamento.repositorios.customizacao.CepRepositoryCustom;
+import br.com.ultracar.treinamento.entidades.Cidade;
+import br.com.ultracar.treinamento.repositorios.customizacao.CidadeRepositoryCustom;
 
-public class CepRepositoryImpl implements CepRepositoryCustom {
+public class CidadeRepositoryImpl implements CidadeRepositoryCustom {
 
 	@PersistenceContext
 	private EntityManager entity;
 	
-	public Page<Cep> findByCep(Cep cep, Pageable pageable) {
+	@Override
+	public Page<Cidade> findByCidade(Cidade cidade, Pageable pageable) {
 		StringBuilder jpql = new StringBuilder();
 		Map<String, Object> parameters = new HashMap<>();
-		jpql.append("Select c From Cep c Where 1=1 ");
-		if(!Objects.isNull(cep.getNumero())) {
-			jpql.append("And c.numero = :numero ");
-			parameters.put("numero", cep.getNumero());
+		jpql.append("Select cidade From Cidade cidade Where 1=1 ");
+		if(Objects.isNull(cidade.getNome())) {
+			jpql.append("And cidade.nome Like %:nome% ");
+			parameters.put("nome", cidade.getNome());
 		}
-		TypedQuery<Cep> query = entity.createQuery(jpql.toString(), Cep.class);
+		TypedQuery<Cidade> query = entity.createQuery(jpql.toString(), Cidade.class);
 		parameters.entrySet().stream().forEach(entry -> {
 			query.setParameter(entry.getKey(), entry.getValue());
 		});
 		query.setFirstResult(pageable.getPageNumber());
 		query.setMaxResults(pageable.getPageSize());
-		return new PageImpl<Cep>(query.getResultList());
+		return new PageImpl<Cidade>(query.getResultList());
 	}
-
+	
+	
 }

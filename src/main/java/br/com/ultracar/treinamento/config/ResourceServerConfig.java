@@ -44,6 +44,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 				.antMatchers("/api/estados/**").permitAll()
 				.antMatchers("/api/bairros/**").permitAll()
 				.antMatchers("/api/enderecos/**").permitAll()
+				.antMatchers("/api/complementos/**").permitAll()
+				.antMatchers("/api/ceps/**").permitAll()
 				.anyRequest().authenticated()
 			.and()
 				.csrf().disable();

@@ -13,7 +13,7 @@ import br.com.ultracar.treinamento.entidades.Cep;
 import br.com.ultracar.treinamento.servicos.CepService;
 
 @RestController
-@RequestMapping("/api/cep")
+@RequestMapping("/api/ceps")
 public class CepControlador {
 	
 	@Autowired

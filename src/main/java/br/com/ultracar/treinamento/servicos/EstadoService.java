@@ -24,5 +24,9 @@ public class EstadoService {
 	public List<Estado> findAll(){
 		return estadoRepository.findAll();
 	}
+	
+	public Estado findByEstadoForUf(String uf) {
+		return estadoRepository.findByEstadoForUf(uf);
+	}
 
 }

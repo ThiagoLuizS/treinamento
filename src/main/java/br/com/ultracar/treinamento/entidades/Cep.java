@@ -15,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "tb_cep")
@@ -33,6 +34,7 @@ public class Cep implements Serializable {
 	
 	@JoinColumn(name = "id_endereco")
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private Endereco endereco;
 
 	public Cep() {}

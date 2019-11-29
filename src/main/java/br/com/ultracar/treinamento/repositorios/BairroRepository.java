@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import br.com.ultracar.treinamento.entidades.Bairro;
 import br.com.ultracar.treinamento.entidades.Cidade;
+import br.com.ultracar.treinamento.repositorios.customizacao.BairroRepositoryCustom;
 
 @Repository
-public interface BairroRepository extends JpaRepository<Bairro, Long>{
+public interface BairroRepository extends JpaRepository<Bairro, Long>, BairroRepositoryCustom{
 
 	@Query("Select e From Bairro e Where e.nome = :nome ")
 	public Bairro findByNome(String nome);

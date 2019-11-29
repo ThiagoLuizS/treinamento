@@ -26,14 +26,14 @@ public class EnderecoRepositoryImpl implements EnderecoRepositoryCustom {
 	public Page<Endereco> findByEndereco(Endereco endereco, Pageable pageable) {
 		StringBuilder jpql = new StringBuilder();
 		Map<String, Object> parameters = new HashMap<>();
-		jpql.append("Select endereco From Endereco endereco ");
+		jpql.append("Select endereco From Endereco endereco Where 1=1 ");
 		
 		if(StringUtils.isNotBlank(endereco.getLogradouro())) {
-			jpql.append("Where endereco.logradouro = :logradouro ");
+			jpql.append("And endereco.logradouro = :logradouro ");
 			parameters.put("logradouro", endereco.getLogradouro());
 		}
 		if(!Objects.isNull(endereco.getTipoLocal())) {
-			jpql.append("and endereco.tipoLocal = :name ");
+			jpql.append("And endereco.tipoLocal = :name ");
 			parameters.put("name", endereco.getTipoLocal());
 		}
 		

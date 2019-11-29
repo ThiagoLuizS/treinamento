@@ -12,10 +12,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tb_complemento")
 @SuppressWarnings("serial")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Complemento implements Serializable {
 	
 	@Id
@@ -27,9 +32,11 @@ public class Complemento implements Serializable {
 	@Column(name = "nm_numero", nullable = false)
 	private Integer numero;
 	
-	@Column(name = "ds_descricao", nullable = false)
+	@Size(min = 5, max = 255)
+	@Column(name = "ds_descricao", nullable = false, length = 255)
 	private String descricao;
 	
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_endereco", nullable = false)
 	private Endereco endereco;

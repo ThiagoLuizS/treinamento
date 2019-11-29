@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +36,12 @@ public class BairroControlador {
 		Bairro bairroSave = bairroService.saveByBairro(bairro);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, bairroSave.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(bairroSave);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<Page<Bairro>> restFindByBairro(Bairro bairro, Pageable pageable){
+		Page<Bairro> bairroPage = bairroService.findByBairro(bairro, pageable);
+		return ResponseEntity.status(HttpStatus.OK).body(bairroPage);
 	}
 	
 	@RequestMapping(value = "/nome/{nome}", method = RequestMethod.GET)

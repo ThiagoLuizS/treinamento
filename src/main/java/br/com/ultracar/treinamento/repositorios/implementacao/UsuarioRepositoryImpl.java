@@ -27,10 +27,10 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryCustom{
 	public Page<Usuario> findByFilter(Usuario usuario, Pageable pageable) {
 		StringBuilder jpql = new StringBuilder();
 		Map<String, Object> parameters = new HashMap<>();
-		jpql.append("Select usuario From Usuario usuario ");
+		jpql.append("Select usuario From Usuario usuario Where 1=1 ");
 		
 		if(StringUtils.isNotBlank(usuario.getLogin())) {
-			jpql.append("Where usuario.login = :login ");
+			jpql.append("And usuario.login = :login ");
 			parameters.put("login", usuario.getLogin());
 		}
 		

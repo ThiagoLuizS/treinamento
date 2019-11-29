@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -43,6 +44,7 @@ public class Bairro implements Serializable{
 	@JoinColumn(name = "id_cidade", foreignKey = @ForeignKey(name = "fk_bairro_cidade"), nullable = false)
 	private Cidade cidade;
 	
+	@JsonBackReference
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "bairro", cascade = CascadeType.ALL)
 	private Set<Endereco> endereco = new HashSet<>();
 
